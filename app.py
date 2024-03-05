@@ -28,6 +28,17 @@ def new_route(cep):
     return f'Atendemos no bairro {bairro}'
 
 
-@app.route("/not-found")
-def not_found():
-    return "Página não encontrada", 404
+@app.route("/listar")
+def add_bairro():
+    
+    return 'ok'
+
+@app.route("/adicionar")
+def add_bairro():
+
+    return bairros_atendidos
+
+@app.route("/remover")
+def add_bairro():
+
+    return 'ok'
