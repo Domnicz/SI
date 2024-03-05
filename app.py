@@ -33,12 +33,16 @@ def add_bairro():
     
     return 'ok'
 
-@app.route("/adicionar")
-def add_bairro():
-
+@app.route("/adicionar/<novo_bairro>")
+def add_bairro(novo_bairro):
+    bairros_atendidos.append(novo_bairro.lower())
     return bairros_atendidos
 
-@app.route("/remover")
-def add_bairro():
-
-    return 'ok'
+@app.route("/remover/<bairro>")
+def add_bairro(bairro):
+    try:
+        bairros_atendidos.remove(bairro.lower())
+    except ValueError:
+        return 'Bairro não encontrado'
+    else:
+        return 'ok'
