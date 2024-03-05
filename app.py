@@ -44,5 +44,7 @@ def add_bairro(bairro):
         bairros_atendidos.remove(bairro.lower())
     except ValueError:
         return 'Bairro não encontrado'
+    except Exception:
+        return 'Erro desconhecido'
     else:
         return 'ok'
