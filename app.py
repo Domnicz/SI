@@ -33,18 +33,27 @@ def add_bairro():
     
     return 'ok'
 
-@app.route("/adicionar/<novo_bairro>")
-def add_bairro(novo_bairro):
+@app.route("/adicionar/<novo_bairro>", methods=['GET'])
+def get_add_bairro(novo_bairro):
+    print('Chamando o get')
+    
     bairros_atendidos.append(novo_bairro.lower())
-    return bairros_atendidos
+    return 'ok'
+
+@app.route("/adicionar/", methods=['POST'])
+def post_add_bairro(novo_bairro):
+    print('chamando o post')
+
+    bairros_atendidos.append(novo_bairro.lower())
+    return 'ok'
 
 @app.route("/remover/<bairro>")
 def add_bairro(bairro):
     try:
         bairros_atendidos.remove(bairro.lower())
     except ValueError:
-        return 'Bairro não encontrado'
+        return 'Bairro não encontrado', 404
     except Exception:
-        return 'Erro desconhecido'
+        return 'Erro desconhecido', 400
     else:
         return 'ok'
