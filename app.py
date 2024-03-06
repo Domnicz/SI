@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import requests
 
 app = Flask(__name__)
@@ -36,15 +36,26 @@ def add_bairro():
 @app.route("/adicionar/<novo_bairro>", methods=['GET'])
 def get_add_bairro(novo_bairro):
     print('Chamando o get')
-    
+
     bairros_atendidos.append(novo_bairro.lower())
     return 'ok'
 
 @app.route("/adicionar/", methods=['POST'])
-def post_add_bairro(novo_bairro):
-    print('chamando o post')
+def post_add_bairro():
+    print('chamando o post', request.json)
 
-    bairros_atendidos.append(novo_bairro.lower())
+    cep = request.json.get('cep')
+    if cep is None:
+        return 'Cep não enviado', 400
+    
+    try:
+        bairro = get_add_bairro(cep)
+    except BairroNotFoundError:
+        return 'Bairro não encontrado', 404
+    
+    bairros_atendidos.append(bairro.lower())
+    return 'Bairro adicionado'
+
     return 'ok'
 
 @app.route("/remover/<bairro>")
